@@ -6,28 +6,27 @@ import {Observable} from 'rxjs';
 import {RecipeService} from '../recipes/recipe.service';
 import {Recipe} from '../recipes/recipe.model';
 import {AuthService} from '../auth/auth.service';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class DataStorageService {
 
   constructor(
-    private http: Http,
+    private httpClient: HttpClient,
     private recipeService: RecipeService,
     private authService: AuthService) {
 
   }
 
-  storeRecipes(): Observable<Response> {
+  storeRecipes(): Observable<Object> {
     const token: string = this.authService.getToken();
-    return this.http.put('https://jmd-udemy-recipe-book.firebaseio.com/recipes.json?auth=' + token, this.recipeService.getRecipes())
-      .map((response: Response) => response.json());
+    return this.httpClient.put('https://jmd-udemy-recipe-book.firebaseio.com/recipes.json', this.recipeService.getRecipes());
   }
 
   getRecipes(): Observable<Recipe[]> {
     const token: string = this.authService.getToken();
-    return this.http.get('https://jmd-udemy-recipe-book.firebaseio.com/recipes.json?auth=' + token, this.recipeService.getRecipes())
-      .map((response: Response) => {
-          const recipes: Recipe[] = response.json();
+    return this.httpClient.get<Recipe[]>('https://jmd-udemy-recipe-book.firebaseio.com/recipes.json')
+      .map((recipes: Recipe[]) => {
           for(let recipe of recipes) {
             if(!recipe['ingredients']) {
               recipe['ingredients'] = [];
