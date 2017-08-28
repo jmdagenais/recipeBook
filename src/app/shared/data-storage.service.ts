@@ -19,12 +19,10 @@ export class DataStorageService {
   }
 
   storeRecipes(): Observable<Object> {
-    const token: string = this.authService.getToken();
     return this.httpClient.put('https://jmd-udemy-recipe-book.firebaseio.com/recipes.json', this.recipeService.getRecipes());
   }
 
   getRecipes(): Observable<Recipe[]> {
-    const token: string = this.authService.getToken();
     return this.httpClient.get<Recipe[]>('https://jmd-udemy-recipe-book.firebaseio.com/recipes.json')
       .map((recipes: Recipe[]) => {
           for(let recipe of recipes) {
