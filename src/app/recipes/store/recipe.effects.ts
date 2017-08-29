@@ -6,6 +6,7 @@ import {Store} from '@ngrx/store';
 import {Recipe} from '../recipe.model';
 import * as RecipeActions from './recipe.actions';
 import * as fromRecipe from './recipe.reducers';
+import 'rxjs/add/operator/withLatestFrom';
 
 @Injectable()
 export class RecipeEffects {

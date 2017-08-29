@@ -14,7 +14,7 @@ import * as RecipeActions from '../../recipes/store/recipe.actions';
     templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
-  private authState: Observable<fromAuth.State>;
+  public authState: Observable<fromAuth.State>;
 
   constructor(
     private router: Router,
